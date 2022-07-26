@@ -39,7 +39,62 @@ const saveBook = (request, h) => {
 }
 
 const getBooks = (request, h) => {
-  if (books.length === 0) {
+  const { name, reading, finished } = request.query
+
+  // Filter by name
+  if (name) {
+    const book = books.filter(book => book.name.toLowerCase().includes(name.toLowerCase()))
+    if (book.length === 0) {
+      return h.response({
+        status: 'error',
+        message: 'Buku tidak ditemukan'
+      }).code(404)
+    } else {
+      return h.response({
+        status: 'success',
+        message: 'Buku berhasil ditemukan',
+        data: {
+          books
+        }
+      }).code(200)
+    }
+
+    // Filter by reading
+  } else if (reading) {
+    const book = books.filter(book => book.reading === reading)
+    if (book.length === 0) {
+      return h.response({
+        status: 'error',
+        message: 'Buku tidak ditemukan'
+      }).code(404)
+    }
+    return h.response({
+      status: 'success',
+      message: 'Buku berhasil ditemukan',
+      data: {
+        books
+      }
+    }).code(200)
+
+    // Filter by finished
+  } else if (finished) {
+    const book = books.filter(book => book.finished === finished)
+    if (book.length === 0) {
+      return h.response({
+        status: 'error',
+        message: 'Buku tidak ditemukan'
+      }).code(404)
+    }
+    return h.response({
+      status: 'success',
+      message: 'Buku berhasil ditemukan',
+      data: {
+        books
+      }
+    }).code(200)
+
+    // Get all books
+  } else if (books.length === 0) {
     return h.response({
       status: 'success',
       data: {
@@ -132,64 +187,4 @@ const deleteBookById = (request, h) => {
   }
 }
 
-const getBooksByName = (request, h) => {
-  const { name } = request.query
-  const book = books.filter(book => book.name.toLowerCase().includes(name.toLowerCase()))
-  if (book.length === 0) {
-    return h.response({
-      status: 'error',
-      message: 'Buku tidak ditemukan'
-    }).code(404)
-  } else {
-    return h.response({
-      status: 'success',
-      data: {
-        books: book
-      }
-    }).code(200)
-  }
-}
-
-const getBooksByReading = (request, h) => {
-  const { reading } = request.query
-  let book = books
-  if (reading === 0 || reading === 1) {
-    book = books.filter(book => book.reading === reading)
-  }
-  if (book.length === 0) {
-    return h.response({
-      status: 'error',
-      message: 'Buku tidak ditemukan'
-    }).code(404)
-  } else {
-    return h.response({
-      status: 'success',
-      data: {
-        books: book
-      }
-    }).code(200)
-  }
-}
-
-const getBooksByFinished = (request, h) => {
-  const { finished } = request.query
-  let book = books
-  if (finished === 0 || finished === 1) {
-    book = books.filter(book => book.finished === finished)
-  }
-  if (book.length === 0) {
-    return h.response({
-      status: 'error',
-      message: 'Buku tidak ditemukan'
-    }).code(404)
-  } else {
-    return h.response({
-      status: 'success',
-      data: {
-        books: book
-      }
-    }).code(200)
-  }
-}
-
-export { saveBook, getBooks, getBookById, editBookById, deleteBookById, getBooksByName, getBooksByReading, getBooksByFinished }
+export { saveBook, getBooks, getBookById, editBookById, deleteBookById }
