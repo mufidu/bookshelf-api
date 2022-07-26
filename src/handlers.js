@@ -10,6 +10,7 @@ const saveBook = (request, h) => {
 
   const book = { id, name, year, author, summary, publisher, pageCount, readPage, reading, finished, insertedAt, updatedAt }
   books.push(book)
+  console.log(books)
 
   const isSuccess = books.filter(book => book.id === id).length > 0
   if (!name) {
