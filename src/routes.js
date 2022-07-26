@@ -19,7 +19,7 @@ const routes = [
   },
   {
     method: 'GET',
-    path: '/books/{id}',
+    path: '/books/{bookId}',
     handler: handlers.getBookById,
     options: {
       description: 'Mengambil buku berdasarkan ID'
@@ -27,7 +27,7 @@ const routes = [
   },
   {
     method: 'PUT',
-    path: '/books/{id}',
+    path: '/books/{bookId}',
     handler: handlers.editBookById,
     options: {
       description: 'Mengubah buku berdasarkan ID'
@@ -35,7 +35,7 @@ const routes = [
   },
   {
     method: 'DELETE',
-    path: '/books/{id}',
+    path: '/books/{bookId}',
     handler: handlers.deleteBookById,
     options: {
       description: 'Menghapus buku berdasarkan ID'
