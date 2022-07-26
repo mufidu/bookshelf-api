@@ -4,7 +4,7 @@ import routes from './routes.js'
 const init = async () => {
   const server = new Hapi.Server({
     port: 5000,
-    host: 'localhost',
+    host: process.env.NODE_ENV === 'production' ? 'https://dicoding-bookshelf-api.herokuapp.com' : 'localhost',
     routes: {
       cors: {
         origin: ['*'],
